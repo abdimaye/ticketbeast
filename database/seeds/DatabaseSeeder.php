@@ -1,5 +1,7 @@
 <?php
 
+use App\Concert;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,5 +27,6 @@ class DatabaseSeeder extends Seeder
 		    'zip' => '17916',
 		    'additional_information' => 'Sample additional info.'
     	])->addTickets(10);
+
     }
 }
