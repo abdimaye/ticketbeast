@@ -10,7 +10,7 @@ class ConcertsController extends Controller
     public function show($id)
     {
     	// findOfFail will return a 404 if model is not found
-    	$concert = Concert::whereNotNull('published_at')->findOrFail($id);
+    	$concert = Concert::published()->findOrFail($id);
 
     	return view('concerts.show', ['concert' => $concert]);
     }
