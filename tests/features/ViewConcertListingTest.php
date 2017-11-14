@@ -46,4 +46,17 @@ class ViewConcertListingTest extends TestCase
         $this->see('For tickets, call (555) 555-5555');
     }
 
+    /** @test */
+    function user_cannot_view_unpublished_listings()
+    {
+        $concert = factory(Concert::class)->create([
+            'published_at' => null,
+        ]);
+
+        // better to use ->get when expecting a failure
+        $this->get('/concerts/' .$concert->id);
+
+        $this->assertResponseStatus(404);
+    }
+
 }
