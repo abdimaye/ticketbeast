@@ -4,9 +4,9 @@
 
 <p>{{ $concert->formatted_date }}</p>
 
-<p>Door at {{ $concert->date->format('g:ia') }}</p>
+<p>Door at {{ $concert->formatted_start_time }}</p>
 
-<p>{{ number_format($concert->ticket_price / 100, 2) }}</p>
+<p>{{ $concert->ticket_price_in_dollars }}</p>
 
 <p>{{ $concert->venue }}</p>
 
