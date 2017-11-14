@@ -39,3 +39,17 @@ $factory->define(App\Concert::class, function(Faker\Generator $faker) {
 	    'additional_information' => 'Sample additional info.'
 	];
 });
+
+// define a particular state so we don't have to explicitly set this value
+// in our tests
+$factory->state(App\Concert::class, 'published' ,function(Faker\Generator $faker) {
+	return [
+		'published_at' => Carbon::parse('-1 week'),
+	];
+});
+
+$factory->state(App\Concert::class, 'unpublished' ,function(Faker\Generator $faker) {
+	return [
+		'published_at' => null,
+	];
+});
