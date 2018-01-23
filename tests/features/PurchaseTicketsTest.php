@@ -132,4 +132,25 @@ class PurchaseTicketsTest extends TestCase
 
         $this->assertValidationError('payment_token');
     }
+
+    /** @test */
+    function an_order_is_not_created_if_payment_fails()
+    {
+        // $this->disableExceptionHandling();
+        
+        $concert = factory(Concert::class)->create();
+
+        $this->orderTickets($concert, [
+            'email' => 'john@example.com',
+            'ticket_quantity' => 3,
+            'payment_token' => 'invalid-payment-token'
+        ]);
+
+        // assert 422 - unprocessable entity
+        $this->assertResponseStatus(422);
+
+        $order = $concert->orders()->where('email', 'john@example.com')->first();
+        // assert order doesn't exist
+        $this->assertNull($order);
+    }
 }
