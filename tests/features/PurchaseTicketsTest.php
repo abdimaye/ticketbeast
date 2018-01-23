@@ -78,6 +78,29 @@ class PurchaseTicketsTest extends TestCase
         $this->assertEquals(0, $this->paymentGateway->totalCharges());
     }
 
+    /** @test */
+    function connot_purhase_more_tickets_than_remain()
+    {
+        $concert = factory(Concert::class)->states('published')->create();
+        $concert->addTickets(50);
+
+        // let's try to order more tickets than are available
+        $this->orderTickets($concert, [
+            'email' => 'john@example.com',
+            'ticket_quantity' => 51,
+            'payment_token' => $this->paymentGateway->getValidTestToken()
+        ]);
+
+        // assert unprcessable entity
+        $this->assertResponseStatus(422);
+        $order = $concert->orders()->where('email', 'john@example.com')->first();
+        // assert an order doesn't exist
+        $this->assertNull($order);
+        // assert customer wasn't charged
+        $this->assertEquals(0, $this->paymentGateway->totalCharges());
+        // assert there are still 50 tickets remaining for sale
+        $this->assertEquals(50, $concert->ticketsRemaining());
+    }
 
     /** @test */
     function email_is_required_to_purchase_tickets()
