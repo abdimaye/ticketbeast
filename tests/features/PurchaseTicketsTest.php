@@ -91,7 +91,7 @@ class PurchaseTicketsTest extends TestCase
             'payment_token' => $this->paymentGateway->getValidTestToken()
         ]);
 
-        // assert unprcessable entity
+        // assert unprocessable entity
         $this->assertResponseStatus(422);
         $order = $concert->orders()->where('email', 'john@example.com')->first();
         // assert an order doesn't exist
