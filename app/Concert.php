@@ -44,7 +44,7 @@ class Concert extends Model
     public function orderTickets($email, $ticketQuantity)
     {
         $tickets = $this->tickets()->available()->take($ticketQuantity)->get();
-
+        
         // Are enough tickets available
         if ($tickets->count() < $ticketQuantity) {
             throw new NotEnoughTicketsException;
