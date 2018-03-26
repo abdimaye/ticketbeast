@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Exceptions\NotEnoughTicketException;
+use App\Exceptions\NotEnoughTicketsException;
 
 class Concert extends Model
 {
@@ -47,7 +47,7 @@ class Concert extends Model
 
         // Are enough tickets available
         if ($tickets->count() < $ticketQuantity) {
-            throw new NotEnoughTicketException;
+            throw new NotEnoughTicketsException;
             
         }
 

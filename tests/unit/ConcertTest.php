@@ -5,7 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Exceptions\NotEnoughTicketException;
+use App\Exceptions\NotEnoughTicketsException;
 
 class ConcertTest extends TestCase
 {
@@ -106,7 +106,7 @@ class ConcertTest extends TestCase
 
 	   	try {
 		    $concert->orderTickets('john@example.com', 11);
-		} catch (NotEnoughTicketException $e) {
+		} catch (NotEnoughTicketsException $e) {
 			$order = $concert->orders()->where('email', 'john@example.com')->first();
 			$this->assertNull($order);
 			$this->assertEquals(10, $concert->ticketsRemaining());
@@ -126,7 +126,7 @@ class ConcertTest extends TestCase
 
 	   	try {
 	   		$concert->orderTickets('john@example.com', 3);
-	   	} catch (NotEnoughTicketException $e) {
+	   	} catch (NotEnoughTicketsException $e) {
 	   		$johnsOrder = $concert->orders()->where('email', 'john@example.com')->first();
 	   		// check that the order wasn't placed
 	   		$this->assertNull($johnsOrder);
