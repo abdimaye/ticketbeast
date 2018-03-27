@@ -74,7 +74,7 @@ class Concert extends Model
 
     public function createOrder($email, $tickets)
     {
-        return $order = Order::forTickets($tickets, $email);
+        return $order = Order::forTickets($tickets, $email, $tickets->sum('price'));
     }
 
     public function addTickets($quantity)
