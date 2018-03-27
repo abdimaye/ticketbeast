@@ -88,7 +88,7 @@ class PurchaseTicketsTest extends TestCase
     /** @test */
     function connot_purhase_more_tickets_than_remain()
     {
-        $this->disableExceptionHandling();
+        // $this->disableExceptionHandling();
 
         $concert = factory(Concert::class)->states('published')->create()->addTickets(50);
 
