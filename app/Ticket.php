@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
@@ -14,6 +15,10 @@ class Ticket extends Model
     	$query->whereNull('order_id');
     }
 
+    public function reserve()
+    {
+    	$this->update(['reserved_at' => Carbon::now()]);
+    }
     public function release()
     {
     	$this->update(['order_id' => null]);

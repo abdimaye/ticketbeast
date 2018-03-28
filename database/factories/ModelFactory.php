@@ -53,3 +53,11 @@ $factory->state(App\Concert::class, 'unpublished' ,function(Faker\Generator $fak
 		'published_at' => null,
 	];
 });
+
+$factory->define(App\Ticket::class, function(Faker\Generator $faker) {
+	return [
+	    'concert_id' => function() { // lazy load
+	    	return factory(App\Concert::class)->create()->id;
+	    },
+	];
+});
