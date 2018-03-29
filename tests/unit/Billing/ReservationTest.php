@@ -28,19 +28,30 @@ class ReservationTest extends TestCase
     /** @test */
     function reserved_tickets_are_released_when_a_reservation_is_cancelled()
     {
-        $ticket1 = Mockery::mock(Ticket::class);
-        $ticket1->shouldReceive('release')->once();
+        // $ticket1 = Mockery::mock(Ticket::class);
+        // $ticket1->shouldReceive('release')->once();
         
-        $ticket2 = Mockery::mock(Ticket::class);
-        $ticket2->shouldReceive('release')->once();
+        // $ticket2 = Mockery::mock(Ticket::class);
+        // $ticket2->shouldReceive('release')->once();
 
-        $ticket3 = Mockery::mock(Ticket::class);
-        $ticket3->shouldReceive('release')->once();
+        // $ticket3 = Mockery::mock(Ticket::class);
+        // $ticket3->shouldReceive('release')->once();
 
-        $tickets = collect([$ticket1, $ticket2, $ticket3]);
+        $tickets = collect([
+            // a spy is similar to a mock but the assertions are done afterwards
+            Mockery::spy(Ticket::class),
+            Mockery::spy(Ticket::class),
+            Mockery::spy(Ticket::class),
+        ]);
 
         $reservation = new Reservation($tickets);
 
         $reservation->cancel();
+
+        foreach($tickets as $ticket) {
+            // notice the assertion for a spy is shoudHaveReceived (past tense)
+            // instead of a mocks shouldReceive (future tense)
+            $ticket->shouldHaveReceived('release');
+        }
     }
 }
