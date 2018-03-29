@@ -23,11 +23,7 @@ class TicketTest extends TestCase
 	    $this->assertNotNull($ticket->fresh()->reserved_at);
 	}
 
-    /** 
-     * @test 
-     * 
-	 * This test is somewhat redundant as it is covered by OrderTest@tickets_are_released_when_an_order_is_cancelled
-     */
+    /** @test */
     function a_ticket_can_be_released()
     {
         $ticket = factory(Ticket::class)->states('reserved')->create();

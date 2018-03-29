@@ -37,16 +37,6 @@ class Order extends Model
         return $this->tickets()->count();
     }
 
-    public function cancel()
-    {
-    	foreach($this->tickets as $ticket) {
-    		$ticket->release();
-    	}
-
-    	// delete the order
-    	$this->delete();
-    }
-
     /** Overriding the toArray method */
     public function toArray()
     {
