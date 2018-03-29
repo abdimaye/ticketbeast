@@ -3,6 +3,7 @@
 
 use App\Concert;
 use App\Ticket;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -29,16 +30,12 @@ class TicketTest extends TestCase
      */
     function a_ticket_can_be_released()
     {
-        $concert = factory(Concert::class)->create();
-        $concert->addTickets(1);
-        $order = $concert->orderTickets('jane@example.com', 1);
-        $ticket = $order->tickets()->first();
+        $ticket = factory(Ticket::class)->states('reserved')->create();
 
-        $this->assertEquals($order->id, $ticket->order_id);
+        $this->assertNotNull($ticket->reserved_at);
 
         $ticket->release();
 
-        // fresh() gives a new instance of ticket
-        $this->assertNull($ticket->fresh()->order_id);
+        $this->assertNull($ticket->reserved_at);
     }
 }
