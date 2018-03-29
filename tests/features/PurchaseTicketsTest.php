@@ -25,7 +25,16 @@ class PurchaseTicketsTest extends TestCase
 
     private function orderTickets($concert, $params) 
     {
+        // 1. store request status
+        $savedRequest = $this->app['request'];
+
+        // 2. Perform request
         $this->json('POST', "/concerts/{$concert->id}/orders", $params);  
+
+        // 3. restore original request state when sub-requests are performed
+        $this->app['request'] = $savedRequest;
+
+        // steps 1 and 3 are relevant for test @cannot_purchase_tickets_another_customer_is_already_trying_to_purchase()
     }
 
     private function assertValidationError($field)
@@ -125,6 +134,7 @@ class PurchaseTicketsTest extends TestCase
                 'ticket_quantity' => 1,
                 'payment_token' => $this->paymentGateway->getValidTestToken(),
             ]);
+            
             $this->assertResponseStatus(422);
             $this->assertFalse($concert->hasOrderFor('personB@example.com'));
             $this->assertEquals(0, $this->paymentGateway->totalCharges());
