@@ -12,7 +12,7 @@ class Reservation
 	    $this->tickets = $tickets;
 	    $this->email = $email;
 	}
-	
+
 	public function totalCost($value='')
 	{
 		return $this->tickets->sum('price');
