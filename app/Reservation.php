@@ -23,4 +23,9 @@ class Reservation
 		}
 	}
 
+	public function tickets()
+	{
+		return $this->tickets;
+	}
+
 }

@@ -142,9 +142,9 @@ class ConcertTest extends TestCase
 
 	    $this->assertEquals(3, $concert->ticketsRemaining());
 
-	    $reserveTickets = $concert->reserveTickets(2);
+	    $reservation = $concert->reserveTickets(2);
 
-	    $this->assertCount(2, $reserveTickets);
+	    $this->assertCount(2, $reservation->tickets());
 	    $this->assertEquals(1, $concert->ticketsRemaining());
 	}
 
