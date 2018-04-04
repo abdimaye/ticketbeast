@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Order;
+
 class Reservation
 {
 	private $tickets;
@@ -16,6 +18,11 @@ class Reservation
 	public function totalCost($value='')
 	{
 		return $this->tickets->sum('price');
+	}
+
+	public function complete()
+	{
+		return $order = Order::forTickets($this->tickets(), $this->email(), $this->totalCost());
 	}
 
 	public function cancel()

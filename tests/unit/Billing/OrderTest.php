@@ -27,21 +27,6 @@ class OrderTest extends TestCase
 	    $this->assertEquals(2, $concert->ticketsRemaining());
 	}
 
-  	/** @test */
-	public function creating_an_order_from_a_reservstion()
-	{
-		$concert = factory(Concert::class)->create(['ticket_price' => 1200]);
-		$tickets = factory(Ticket::class, 3)->create(['concert_id' => $concert->id]);
-
-		$reservation = new reservation($tickets, 'john@example.com');
-
-		$order = Order::fromReservation($reservation);
-
-		$this->assertEquals('john@example.com', $reservation->email());
-		$this->assertEquals(3, $order->ticketQuantity());
-		$this->assertEquals(3600, $order->amount);
-	}
-
 	/** @test */
 	function converting_to_an_array()
 	{
