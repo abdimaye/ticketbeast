@@ -5,6 +5,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+/**
+ * @group integration
+ */
 class StripePaymentGatewayTest extends TestCase
 {
 	protected function setUp()
