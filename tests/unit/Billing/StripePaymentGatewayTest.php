@@ -27,7 +27,6 @@ class StripePaymentGatewayTest extends TestCase
         $paymentGateway->charge(2500, $this->validToken());
 
         // Verify that the charge was completed
-        // $lastCharge = $this->lastCharge();
         $this->assertCount(1, $this->newCharges());
         $this->assertEquals(2500, $this->lastCharge()->amount);
     }
