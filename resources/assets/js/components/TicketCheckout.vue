@@ -94,17 +94,17 @@
                     payment_token: token.id,
                 })
 
-                // this.processing = true
+                this.processing = true
 
-                // axios.post(`/concerts/${this.concertId}/orders`, {
-                //     email: token.email,
-                //     quantity: this.quantity,
-                //     payment_token: token.id,
-                // }).then(response => {
-                //     window.location.href = response.body.url
-                // }).catch(response => {
-                //     this.processing = false
-                // })
+                axios.post(`/concerts/${this.concertId}/orders`, {
+                    email: token.email,
+                    ticket_quantity: this.quantity,
+                    payment_token: token.id,
+                }).then(response => {
+                    window.location.href = response.body.url
+                }).catch(response => {
+                    this.processing = false
+                })
             }
         },
         created() {
