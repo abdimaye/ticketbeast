@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class StripePaymentGatewayTest extends TestCase
 {
+	use PaymentGatewayContractTests;
+
 	protected function setUp()
 	{
 		parent::setUp();
@@ -21,22 +23,6 @@ class StripePaymentGatewayTest extends TestCase
 	{
 		return new StripePaymentGateway(config('services.stripe.secret'));
 	}
-
-    /** @test */
-    function charges_with_a_valid_payment_token_are_successful()
-    {
-        // Create a new StripePaymentGateway
-    	$paymentGateway = $this->getPaymentGateway();
-
-    	$newCharges = $paymentGateway->newChargesDuring(function($paymentGateway) {
-    		// Create a new charge for some amount using a valid token
-        	$paymentGateway->charge(2500, $paymentGateway->getValidTestToken());
-    	});
-
-        // Verify that the charge was completed
-        $this->assertCount(1, $newCharges);
-        $this->assertEquals(2500, $newCharges->sum());
-    }
 
     /** @test */
 	function charges_with_an_invalid_payment_token_fail()
