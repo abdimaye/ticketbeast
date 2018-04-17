@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class PurchaseTicketsTest extends BrowserKitTestCase
+class PurchaseTicketsTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -29,12 +29,27 @@ class PurchaseTicketsTest extends BrowserKitTestCase
         $savedRequest = $this->app['request'];
 
         // 2. Perform request
-        $this->json('POST', "/concerts/{$concert->id}/orders", $params);  
+        $this->response = $this->json('POST', "/concerts/{$concert->id}/orders", $params);  
 
         // 3. restore original request state when sub-requests are performed
         $this->app['request'] = $savedRequest;
 
         // steps 1 and 3 are relevant for test @cannot_purchase_tickets_another_customer_is_already_trying_to_purchase()
+    }
+
+    private function assertResponseStatus($status)
+    {
+        $this->response->assertStatus($status);
+    }
+
+    private function seeJsonSubset($data)
+    {
+        $this->response->assertJson($data);
+    }
+
+    private function decodeResponseJson()
+    {
+        return $this->response->decodeResponseJson();
     }
 
     private function assertValidationError($field)
