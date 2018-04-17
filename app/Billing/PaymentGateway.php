@@ -8,4 +8,6 @@ interface PaymentGateway
 
 	public function getValidTestToken();
 
+	public function newChargesDuring($callback);
+
 }
