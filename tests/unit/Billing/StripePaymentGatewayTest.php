@@ -28,9 +28,7 @@ class StripePaymentGatewayTest extends TestCase
         // Create a new StripePaymentGateway
     	$paymentGateway = $this->getPaymentGateway();
 
-    	$charge = $paymentGateway->lastCharge();
-
-    	$newCharges = $paymentGateway->newChargesDuring(function() {
+    	$newCharges = $paymentGateway->newChargesDuring(function($paymentGateway) {
     		// Create a new charge for some amount using a valid token
         	$paymentGateway->charge(2500, $paymentGateway->getValidTestToken());
     	});
