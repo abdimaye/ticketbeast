@@ -18,9 +18,13 @@ class ViewOrderTest extends TestCase
 		// create an order
 		// create some tickets
 
+		$this->disableExceptionHandling();
+
 		$concert = factory(Concert::class)->create();
 
-		$order = factory(Order::class)->create();
+		$order = factory(Order::class)->create([
+			'coNfirmation_number' => 'ORDERCONFIRMATION123'
+		]);
 
 		$ticket = factory(Ticket::class)->create([
 			'concert_id' => $concert->id,
@@ -28,7 +32,9 @@ class ViewOrderTest extends TestCase
 		]);
 
 		// visit the order confirmation page
-		$this->get("orders/{$order->id}");
+		$response = $this->get("orders/ORDERCONFIRMATION123");
+
+		$response->assertStatus(200);
 
 		// assert we see the correct order details 
 		
