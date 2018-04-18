@@ -40,6 +40,13 @@ $factory->define(App\Concert::class, function(Faker\Generator $faker) {
 	];
 });
 
+$factory->define(App\Order::class, function(Faker\Generator $faker) {
+	return [
+	    'amount' => 5250,
+	    'email' => 'somebody@example.com'
+	];
+});
+
 // define a particular state so we don't have to explicitly set this value
 // in our tests
 $factory->state(App\Concert::class, 'published' ,function(Faker\Generator $faker) {
