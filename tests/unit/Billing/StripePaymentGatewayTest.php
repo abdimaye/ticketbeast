@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class StripePaymentGatewayTest extends TestCase
 {
-	// use PaymentGatewayContractTests;
+	use PaymentGatewayContractTests;
 
 	protected function getPaymentGateway()
 	{
